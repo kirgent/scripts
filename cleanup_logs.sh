@@ -1,5 +1,6 @@
 #!/bin/bash
 # written by Kirill Grushin (kirill.grushin@dev.zodiac.tv)
+# cleanup backspace sequences / carriage return ^M / backspace return ^H / empty strings
 
 if [ -z "$1" ]; then
 echo "no input file specified!"
