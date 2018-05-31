@@ -1,4 +1,5 @@
 #!/bin/bash
+# written by Kirill Grushin (kirill.grushin@dev.zodiac.tv)
 
 build="$1"
 platform="worldbox"

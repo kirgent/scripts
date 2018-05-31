@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+# written by Kirill Grushin (kirill.grushin@dev.zodiac.tv)
+
 git status
 git pull
 git status

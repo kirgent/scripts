@@ -1,4 +1,6 @@
 #!/bin/bash
+# written by Kirill Grushin (kirill.grushin@dev.zodiac.tv)
+
 #dir="scripts/tests"
 dir="IdeaProjects/Reminders/src/main/bash/"
 
