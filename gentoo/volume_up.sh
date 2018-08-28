@@ -1,4 +1,6 @@
 #!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
+
 mixer="Master"
 sudo amixer -q set $mixer 3dB+
 VOLUME=`sudo amixer sget $mixer | grep Mono: | sed -e "s/[^[]*\[\([^%]*\).*/\1/"`

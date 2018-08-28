@@ -1,19 +1,15 @@
-BCM71250040
-Boot2 Ver 1\.12
-Shmoo Version=3\.5
-\[NotificationService\].*CloudRemindersClient:
-reminders\.retry\.attempts -->
-reminders\.retry\.timeout -->
-log_echo on
-AmsUtils:.*sender is dsg
-AmsUtils:.*sender is remind
-New IP address for ETH interface:
-STBA-1920
+Not initialized
+Cannot allocate new Tuner instance
+Cannot reserve Tuner
 RudpServerAddress -->
-CDL_MANAGER_DOWNLOAD_PROGRESS : Download
+JsonValue:
+minTunerUseGapLength
+rebootnow
+CDL_MANAGER_DOWNLOAD_PROGRESS
 Media::ResourcePool: handle_event: ca_status with id.*for source.*is postponed
-video: switch_to.* url\([a-z0-9]
+123video: switch_to.* url\([a-z0-9]
 MAIN [0-9]
+\[DSGCC_PROXY\].*Nothing was read during
 play_error_msg:.*text:
 The narration of system popup disabled by user
 switch internal state.* -> PlayingLive
@@ -28,7 +24,6 @@ showAlert "
 ErrorPopup.*title
 CAS provider status
 'plant_type' =
-plant_type' ->
 unit address:
 Unable to retrieve unit address
 Unable to fetch STB address
@@ -38,15 +33,19 @@ DSM-CC reading error
 inet addr:(1|3)0
 failed to download
 FAILED in '
+SIGSEGV
 : DIAG .*: (Cause|Reason|Thread):
 \[F\]
 \[FTL\]
+cannot initialize transport
+invalid dcn
 Count of active timers:
 Execute command:
+^reminder_timers 
 ClientId:.* is crashed
 new child process created:
-#DC::AggregatorAM: on_event_internal: eid = (33,|3,|5,|11,|15,|28,|29,|30,)
-#DC::AggregatorAM: on_event_internal: eid
+DC::AggregatorAM: on_event_internal: eid = (33,|3,|11,|15,|28,|29,|30,)
+DC::DataCollector: initialize:
 DC::SenderAM: serialize: data size
 on_network_changed:
 sender not registered
@@ -67,13 +66,14 @@ Memory leaks detected
 ThinClient ver
 [0-9]: (hardware_cm_mac_address|MacAddress|BoxModel|DGroup|BoxIP|current_channel_dcn|FlashVersion|SWVersion|DOB_start|DTS_ConfigFile|cas\.status)
 'MacAddress' :
-macaddress -->
 overall boot progress [0-9]0%
-\.so: vbs-d-
-vbs-d-CHARTER
+libdvbs-common\.so: vbs-d
 terminated by signal
 \[E\] CDS: Process.*terminated by a estarting system
 CfgFile: invalid column count at row
+transport couldn't send data
+Exec format error
+Bad executable format
 dump_callback.*created successfully
 Segmentation fault
 \!\!\! Assert 
@@ -85,3 +85,4 @@ not syncing
 Got unhandled
 unhandled exception
 expected non-zero
+restarting

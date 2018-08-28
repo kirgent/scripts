@@ -1,5 +1,5 @@
 #!/bin/bash
-# written by Kirill Grushin (kirill.grushin@dev.zodiac.tv)
+# written by Kirill Grushin (kirgent@gmail.com)
 
 target_lib="Reminders/lib"
 

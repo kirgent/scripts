@@ -1,2 +1,1 @@
-# scripts
 # daily work scripts

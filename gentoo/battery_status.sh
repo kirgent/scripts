@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
 
 function check_capacity {
 if [[ "$remaining_capacity" -gt "$warning_capacity" || "$charging_state" == "charging" ]]; then color="green"; else color="red"; fi

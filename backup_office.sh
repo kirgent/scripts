@@ -1,5 +1,5 @@
-#!/bin/sh
-# written by Kirill Grushin (kirill.grushin@dev.zodiac.tv)
+#!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
 
 #if [ $(whoami) != "root" ];then 
 #	echo -e "\n>>> you must be root to run\n"

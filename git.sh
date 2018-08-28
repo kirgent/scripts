@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
+
 git status
 git pull
 git status

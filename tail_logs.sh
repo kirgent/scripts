@@ -1,5 +1,5 @@
 #!/bin/bash
-# written by Kirill Grushin (kirill.grushin@dev.zodiac.tv)
+# written by Kirill Grushin (kirgent@gmail.com)
 
 file="$1"
 target_folder="$HOME"

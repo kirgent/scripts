@@ -1,4 +1,6 @@
 #!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
+
 sudo amixer -q set "Master" 30% unmute
 sudo amixer -q set "PCM" 100%
 sudo amixer -q set "Speaker" 100% unmute
