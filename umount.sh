@@ -1,4 +1,3 @@
 #!/bin/bash
 # written by Kirill Grushin (kirgent@gmail.com)
-
-wget -nv  --spider -i list.txt
+sudo umount -v /media/1 && df -h
