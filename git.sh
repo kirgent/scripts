@@ -3,10 +3,14 @@
 
 git status
 git pull
+echo "======================="
+
 git status
 git commit -a -m 'auto commit'
+echo "======================="
+
 git status
 git push
-git status
+echo "======================="
 
-#git config --global credential.helper cache
+git status
