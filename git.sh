@@ -3,14 +3,14 @@
 
 git status
 git pull
-echo "======================="
+echo "===================was git pull===="
 
 git status
 git commit -a -m 'auto commit'
-echo "======================="
+echo "===================was git commit===="
 
 git status
 git push
-echo "======================="
+echo "===================was git push===="
 
 git status
