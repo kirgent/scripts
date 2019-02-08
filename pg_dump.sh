@@ -1,9 +1,10 @@
 #!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
 # pg_dump is required!
 
-if [ ! -x "$(which pg_dump 2> /dev/null)" ]; then echo "pg_dump is not found"; exit; fi
+if [[ ! -x "$(which pg_dump 2> /dev/null)" ]]; then echo "pg_dump is not found"; exit; fi
 
-if [ $(whoami) != "root" ]; then
+if [[ $(whoami) != "root" ]]; then
 echo "you must be root to run"
 exit 1
 fi

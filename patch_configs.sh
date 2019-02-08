@@ -1,4 +1,5 @@
 #!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
 
 vimrc="/root/.vimrc"
 if [ -z "`grep "syntax on" $vimrc`" ]; then

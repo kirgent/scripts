@@ -1,18 +1,19 @@
 #!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
 # curl is required!
 # psql is required!
 # pg_restore is required!
 
-if [ ! -x "$(which curl 2> /dev/null)" ]; then echo "curl is not found"; exit; fi
-if [ ! -x "$(which psql 2> /dev/null)" ]; then echo "psql is not found"; exit; fi
-if [ ! -x "$(which pg_restore 2> /dev/null)" ]; then echo "pg_restore is not found"; exit; fi
+if [[ ! -x "$(which curl 2> /dev/null)" ]]; then echo "curl is not found"; exit; fi
+if [[ ! -x "$(which psql 2> /dev/null)" ]]; then echo "psql is not found"; exit; fi
+if [[ ! -x "$(which pg_restore 2> /dev/null)" ]]; then echo "pg_restore is not found"; exit; fi
 
-if [ $(whoami) != "root" ]; then
+if [[ $(whoami) != "root" ]]; then
 echo "you must be root to run"
 exit 1
 fi
 
-if [ -z "$1" ]; then
+if [[ -z "$1" ]]; then
 echo "No input dump specified!"
 exit
 fi
