@@ -69,9 +69,7 @@ echo "$? ---> reindex database unidata is OK"
 curl -X DELETE 'http://localhost:9200/_all' && echo -e "\n---> indexes are cleaned OK"
 systemctl restart elasticsearch && echo "---> elasticsearch is restarted OK"
 
-
 systemctl start tomcat && echo "---> tomcat is started OK"
-
 
 echo -e "\n========= ========= =========
 for dumping use:
