@@ -2,15 +2,17 @@
 # written by Kirill Grushin (kirgent@gmail.com)
 
 git status
+sleep 3
+
 git pull
-echo "===================was git pull===="
+echo "======================="
 
 git status
 git commit -a -m 'auto commit'
-echo "===================was git commit===="
+echo "======================="
 
 git status
 git push
-echo "===================was git push===="
+echo "======================="
 
 git status
