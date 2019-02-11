@@ -28,7 +28,7 @@ jobId=$(curl -s -X PUT \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: ${token}" \
-"{\"name\":\"reindexDataJob\",\"description\":\"reindexDataJob\",\"cronExpression\":\"\",\"jobNameReference\":\"reindexDataJob\",\"enabled\":true,\"parameters\":[
+-d "{\"name\":\"reindexDataJob\",\"description\":\"reindexDataJob\",\"cronExpression\":\"\",\"jobNameReference\":\"reindexDataJob\",\"enabled\":true,\"parameters\":[
 {\"name\":\"jobUser\",\"multi_select\":false,\"value\":\"\",\"type\":\"STRING\",\"id\":\"job.parameter.meta.DefaultMetaParameter-77\",\"deepDirty\":false,\"modelDirty\":false},
 {\"name\":\"reindexTypes\",\"multi_select\":false,\"value\":\"ALL\",\"type\":\"STRING\",\"id\":\"job.parameter.meta.EnumMetaParameter-20\",\"deepDirty\":false,\"modelDirty\":false},
 {\"name\":\"usersSelector\",\"multi_select\":false,\"value\":\"\",\"type\":\"STRING\",\"id\":\"job.parameter.meta.UserSelectorMetaParameter-12\",\"deepDirty\":false,\"modelDirty\":false},
@@ -42,21 +42,21 @@ jobId=$(curl -s -X PUT \
 {\"name\":\"skipDq\",\"multi_select\":false,\"value\":\"false\",\"type\":\"BOOLEAN\",\"id\":\"job.parameter.meta.DefaultMetaParameter-85\",\"deepDirty\":false,\"modelDirty\":false},
 {\"name\":\"skipConsistencyCheck\",\"multi_select\":false,\"value\":\"false\",\"type\":\"BOOLEAN\",\"id\":\"job.parameter.meta.DefaultMetaParameter-86\",\"deepDirty\":false,\"modelDirty\":false},
 {\"name\":\"skipNotifications\",\"multi_select\":false,\"value\":\"false\",\"type\":\"BOOLEAN\",\"id\":\"job.parameter.meta.DefaultMetaParameter-87\",\"deepDirty\":false,\"modelDirty\":false},
-{\"name\":\"filters\",\"multi_select\":false,\"value\":\"\",\"type\":\"STRING\",\"id\":\"job.parameter.meta.DefaultMetaParameter-88\",\"deepDirty\":false,\"modelDirty\":false}]}"
+{\"name\":\"filters\",\"multi_select\":false,\"value\":\"\",\"type\":\"STRING\",\"id\":\"job.parameter.meta.DefaultMetaParameter-88\",\"deepDirty\":false,\"modelDirty\":false}]}" \
 "http://10.0.6.14:8080/unidata-backend/api/internal/jobs" | awk -F "," '{print $1}'|awk -F ":" '{print $2}')
 echo "jobId=${jobId}"
 
 
 echo "---> startJob:"
-curl -s -X POST \
+jobExecutionId=$(curl -s -X POST \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: ${token}" \
-"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/start/${jobId}"
-echo
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/start/${jobId}")
+echo "jobExecutionId=${jobExecutionId}"
 
-echo "sleep 30sec..."
-sleep 30
+echo "sleep 60sec..."
+sleep 60
 
 
 echo "---> deleteJob:"
