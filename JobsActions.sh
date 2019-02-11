@@ -56,27 +56,19 @@ jobExecutionId=$(curl -s -X POST \
 "http://10.0.6.14:8080/unidata-backend/api/internal/jobs/start/${jobId}")
 echo "jobExecutionId=${jobExecutionId}"
 
-echo "sleep 60sec..."
-sleep 60
-
-status=$(curl -s -X GET \
--H "Accept: application/json" \
--H "Content-Type: application/json" \
--H "Authorization: ${token}" \
-"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/executions/${jobId}/0/1000"| awk -F "," '{print $5}'|awk -F "\"" '{print $4}')
-echo "status=${status}"
-
+fromInd=0
+itemCount=1000
+status=null
 while [ ${status} != "COMPLETED" ]
 do
 status=$(curl -s -X GET \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: ${token}" \
-"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/executions/${jobId}/0/1000"| awk -F "," '{print $5}'|awk -F "\"" '{print $4}')
-echo "status=${status}"
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/executions/${jobId}/${fromInd}/${itemCount}"| awk -F "," '{print $5}'|awk -F "\"" '{print $4}')
+echo "status=${status}, sleep for 1sec..."
 sleep 1
 done
-
 
 
 

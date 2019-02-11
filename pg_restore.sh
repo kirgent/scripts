@@ -71,6 +71,10 @@ systemctl restart elasticsearch && echo "---> elasticsearch is restarted OK"
 
 systemctl start tomcat && echo "---> tomcat is started OK"
 
+sleep 30
+
+JobsActions.sh
+
 echo -e "\n========= ========= =========
 for dumping use:
 systemctl stop tomcat
