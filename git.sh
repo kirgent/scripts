@@ -21,5 +21,5 @@ echo "---> git push:"
 git push && echo "---> git push-ed"
 
 
-echo "---> git status:"
+echo -e "=============================\n---> git status:"
 git status && echo "---> git status-ed"
