@@ -1,4 +1,5 @@
 #!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
 
 token=$(curl -s -X POST \
 -H "Accept: application/json" \
@@ -57,6 +58,26 @@ echo "jobExecutionId=${jobExecutionId}"
 
 echo "sleep 60sec..."
 sleep 60
+
+status=$(curl -s -X GET \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: ${token}" \
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/executions/${jobId}/0/1000"| awk -F "," '{print $5}'|awk -F "\"" '{print $4}')
+echo "status=${status}"
+
+while [ ${status} != "COMPLETED" ]
+do
+status=$(curl -s -X GET \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: ${token}" \
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/executions/${jobId}/0/1000"| awk -F "," '{print $5}'|awk -F "\"" '{print $4}')
+echo "status=${status}"
+sleep 1
+done
+
+
 
 
 echo "---> deleteJob:"
