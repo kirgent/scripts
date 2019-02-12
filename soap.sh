@@ -19,7 +19,7 @@ password="1q2w3e4r"
 
 curl -X POST \
 -H "Content-Type: text/xml; charset=utf-8" \
--H "SOAPAction: http://10.0.6.14:8080/unidata-backend/api/public/v5/UnidataService" \
+-H "SOAPAction: http://10.0.6.14:8080/unidata-backend/api/public/meta/v5?wsdl" \
 -d "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:api=\"http://api.mdm.unidata.com/${protoVer}/\" xmlns:data=\"http://data.mdm.unidata.com/${protoVer}/\"> \
 <soapenv:Header/> \
 <soapenv:Body> \
