@@ -59,7 +59,7 @@ echo "jobExecutionId=${jobExecutionId}"
 fromInd=0
 itemCount=1000
 status=null
-while [ ${status} != "COMPLETED" ]
+while [[ ${status} != "COMPLETED" ]]
 do
 status=$(curl -s -X GET \
 -H "Accept: application/json" \
