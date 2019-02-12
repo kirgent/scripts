@@ -33,7 +33,7 @@ curl -X POST \
 </api:apiRequestBody> \
 </soapenv:Body> \
 </soapenv:Envelope>" \
-"http://10.0.6.14:8080/unidata-backend/api/public/v5/UnidataService"
+"http://10.0.6.14:8080/unidata-backend/api/public/meta/v5"
 
 
 exit
