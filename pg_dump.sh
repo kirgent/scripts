@@ -15,17 +15,14 @@ exit 1
 fi
 
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
-pg_dumi -Fc ${database} -h ${host} -p ${port} -U ${username} > unidata_`date +%d%m%Y_%H%M%S`.dump
-ls -l *.dump
+pg_dump -Fc ${database} -h ${host} -p ${port} -U ${username} > unidata_`date +%d%m%Y_%H%M%S`.dump && echo "---> pg_dump is done OK"
 systemctl start tomcat && echo "---> tomcat is started OK"
+ls -l *.dump
 
-
-echo -e "========= ========= =========
-for restoring use:
+echo -e "\n\n========= for restoring use: =========
 systemctl stop tomcat
 su postgres
 dropdb unidata
 createdb unidata
 pg_restore -h localhost -p 5432 -U postgres -C -d unidata <unidata.dump>
-systemctl start tomcat
-========= ========= ========="
+systemctl start tomcat"
