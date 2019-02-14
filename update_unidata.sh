@@ -76,7 +76,7 @@ rm -rf "$UNIDATA" && echo "---> old $UNIDATA is removed OK"
 tar -xf "$TARGZ" && echo "---> $TARGZ is unpacked OK"
 
 systemctl stop elasticsearch && echo "---> elasticsearch is stopped OK"
-ps aux|grep java|grep tomcat|awk '{print $1" "$2}'
+echo "tomcat pid=$(ps aux|grep java|grep tomcat|awk '{print $2}')"
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
 
 
@@ -126,10 +126,29 @@ cp -rv ${UNIDATA}/Tomcat/webapps/* ${TOMCAT}/webapps/ && echo "---> tomcat/webap
 chown -R tomcat:tomcat ${TOMCAT}/webapps/ ${TOMCAT}/conf/ ${TOMCAT}/logs/  && echo "---> tomcat/* are chowned OK"
 
 systemctl start elasticsearch && echo "---> elasticsearch is started OK"
+
+
+###############################################
+#### patching
+sed -i 's/unidata.password.policy.expiration.email.notification.period.days=.*/unidata.password.policy.expiration.email.notification.period.days=1/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.admin.expiration.days=.*/unidata.password.policy.admin.expiration.days=1/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.user.expiration.days=.*/unidata.password.policy.user.expiration.days=1/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.check.last.repeat=.*/unidata.password.policy.check.last.repeat=0/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.regexp=.*/unidata.password.policy.regexp=((?=.*[0-9])(?=.*[a-z])).{1,}/' ${TOMCAT}/conf/unidata/backend.properties
+
+sed -i 's/unidata.notification.enabled=.*/unidata.notification.enabled=true/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.activiti.task.mailServerHost=.*/unidata.activiti.task.mailServerHost=smtp.gmail.com/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.activiti.task.mailServerPort=.*/unidata.activiti.task.mailServerPort=465/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.activiti.task.mailServerUseSSL=.*/unidata.activiti.task.mailServerUseSSL=true/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.activiti.task.mailServerDefaultFrom=.*/unidata.activiti.task.mailServerDefaultFrom=kirill.grushin@unidata-platform.ru/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.activiti.task.mailServerUsername=.*/unidata.activiti.task.mailServerUsername=kirill.grushin@unidata-platform.ru/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.activiti.task.mailServerPassword=.*/unidata.activiti.task.mailServerPassword=qwpoexplorer/' ${TOMCAT}/conf/unidata/backend.properties
+echo "---> custom patching is done OK"
 systemctl start tomcat && echo "---> tomcat is started OK"
 
+
 ln -sfvn "$UNIDATA" unidata
-ln -sfv "$TARGZ" unidata-
+ln -sfv "$TARGZ" unidata---
 ln -sfv "$TARGZ" unidata-${PREFIX}- && echo "---> symlinks are updated OK"
 
 if [[ "$UPDATE_LINKS" == "true" ]]; then
@@ -147,7 +166,17 @@ ln -sfv /var/lib/pgsql/9.6/data/postgresql.conf postgresql.conf
 echo "---> config symlinks are updated OK"
 fi
 
-status_all.sh
 
+echo "---> workaround:"
+while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
+echo "sleeping for 3sec, waiting for file ${TOMCAT}/webapps/unidata-frontend/customer.json"
+sleep 3
+done
+cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
+echo "---> workaround is applied"
+
+
+echo "---> Done"
+status_all.sh
 ls -l unidata-${PREFIX}-
 ls -l unidata

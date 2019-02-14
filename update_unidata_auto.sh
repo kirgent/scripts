@@ -76,7 +76,7 @@ rm -rf "$UNIDATA" && echo "---> old $UNIDATA is removed OK"
 tar -xf "$TARGZ" && echo "---> $TARGZ is unpacked OK"
 
 systemctl stop elasticsearch && echo "---> elasticsearch is stopped OK"
-ps aux|grep java|grep tomcat|awk '{print $1" "$2}'
+echo "tomcat pid=$(ps aux|grep java|grep tomcat|awk '{print $2}')"
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
 
 
@@ -137,7 +137,7 @@ systemctl start tomcat && echo "---> tomcat is started OK"
 
 
 ln -sfvn "$UNIDATA" unidata
-ln -sfv "$TARGZ" unidata-
+ln -sfv "$TARGZ" unidata---
 ln -sfv "$TARGZ" unidata-${PREFIX}- && echo "---> symlinks are updated OK"
 
 if [[ "$UPDATE_LINKS" == "true" ]]; then
@@ -155,14 +155,17 @@ ln -sfv /var/lib/pgsql/9.6/data/postgresql.conf postgresql.conf
 echo "---> config symlinks are updated OK"
 fi
 
-status_all.sh
-
-ls -l unidata-${PREFIX}-
-ls -l unidata
 
 echo "---> workaround:"
 while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
 echo "sleeping for 3sec, waiting for file ${TOMCAT}/webapps/unidata-frontend/customer.json"
 sleep 3
 done
-cp /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
+cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
+echo "---> workaround is applied"
+
+
+echo "---> Done"
+status_all.sh
+ls -l unidata-${PREFIX}-
+ls -l unidata

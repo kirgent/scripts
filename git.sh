@@ -1,6 +1,8 @@
 #!/bin/bash
 # written by Kirill Grushin (kirgent@gmail.com)
 
+cd /home/centuser/scripts
+
 echo "---> git status:"
 git status && echo "---> git status-ed"
 
