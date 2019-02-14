@@ -2,6 +2,11 @@
 # written by Kirill Grushin (kirgent@gmail.com)
 # pg_dump is required!
 
+database=unidata
+host=localhost
+port=5432
+username=postgres
+
 if [[ ! -x "$(which pg_dump 2> /dev/null)" ]]; then echo "pg_dump is not found"; exit; fi
 
 if [[ $(whoami) != "root" ]]; then
@@ -10,7 +15,7 @@ exit 1
 fi
 
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
-pg_dump -Fc unidata -h localhost -p 5432 -U postgres > unidata_`date +%d%m%Y_%H%M%S`.dump
+pg_dumi -Fc ${database} -h ${host} -p ${port} -U ${username} > unidata_`date +%d%m%Y_%H%M%S`.dump
 ls -l *.dump
 systemctl start tomcat && echo "---> tomcat is started OK"
 
