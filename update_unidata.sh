@@ -169,7 +169,7 @@ fi
 
 echo "---> workaround:"
 while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
-echo "sleeping for 3sec, waiting for file ${TOMCAT}/webapps/unidata-frontend/customer.json"
+echo "sleeping for 3sec, waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
 sleep 3
 done
 cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
@@ -178,5 +178,5 @@ echo "---> workaround is applied"
 
 echo "---> Done"
 status_all.sh
-ls -l unidata-${PREFIX}-
 ls -l unidata
+ls -l unidata-${PREFIX}-

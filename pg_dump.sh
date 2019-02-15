@@ -18,6 +18,8 @@ systemctl stop tomcat && echo "---> tomcat is stopped OK"
 pg_dump -Fc ${database} -h ${host} -p ${port} -U ${username} > unidata_`date +%d%m%Y_%H%M%S`.dump && echo "---> pg_dump is done OK"
 systemctl start tomcat && echo "---> tomcat is started OK"
 ls -l *.dump
+echo "---> Done"
+
 
 echo -e "\n\n========= for restoring use: =========
 systemctl stop tomcat

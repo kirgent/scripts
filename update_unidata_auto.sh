@@ -13,7 +13,7 @@ if [[ ! -x "$(which sed 2> /dev/null)" ]]; then echo "sed is not found"; exit; f
 if [[ ! -x "$(which awk 2> /dev/null)" ]]; then echo "awk is not found"; exit; fi
 
 if [[ $(whoami) != "root" ]]; then
-echo "you must be root to run"
+echo "You must be root to run"
 exit 1
 fi
 
@@ -32,7 +32,7 @@ LOOKING_DIR="$HOMEUSER/d"
 TEMP="distribution"
 
 while [[ ! -e "`ls -x $LOOKING_DIR/Unidata-*.zip`" ]]; do
-echo "File Unidata-*.zip not exist in $LOOKING_DIR!"
+echo "sleeping for 3sec, waiting for Unidata-*.zip in $LOOKING_DIR ..."
 sleep 3
 done
 ZIP="`ls -x $LOOKING_DIR/Unidata-*.zip`"
@@ -158,7 +158,7 @@ fi
 
 echo "---> workaround:"
 while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
-echo "sleeping for 3sec, waiting for file ${TOMCAT}/webapps/unidata-frontend/customer.json"
+echo "sleeping for 3sec, waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
 sleep 3
 done
 cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
@@ -167,5 +167,5 @@ echo "---> workaround is applied"
 
 echo "---> Done"
 status_all.sh
-ls -l unidata-${PREFIX}-
 ls -l unidata
+ls -l unidata-${PREFIX}-

@@ -31,10 +31,10 @@ sleep 3
 
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
 systemctl restart postgresql-9.6 && echo "---> postgres is restarted OK"
-echo "sleep 5 sec..."
+echo "sleep for 5sec..."
 sleep 5
 systemctl restart postgresql-9.6 && echo "---> postgres is restarted OK"
-echo "sleep 5 sec..."
+echo "sleep for5 sec..."
 sleep 5
 
 sudo -u ${username} `which psql` -U ${username} <<'SQL'
@@ -69,15 +69,17 @@ REINDEX DATABASE unidata;
 SQL
 echo "$? ---> reindex database unidata is OK"
 
-curl -X DELETE 'http://localhost:9200/_all' && echo -e "\n---> indexes are cleaned OK"
+curl -X DELETE 'http://localhost:9200/_all' && echo -e "\n---> elasticsearch indexes are cleaned OK"
 systemctl restart elasticsearch && echo "---> elasticsearch is restarted OK"
 
 systemctl start tomcat && echo "---> tomcat is started OK"
 
-echo "sleeping for 30sec..."
-sleep 30
+echo "sleeping for 60sec..."
+sleep 60
 
 restAPI_JobsActions.sh
+echo "---> Done"
+
 
 echo -e "\n\n========= for dumping use: =========
 systemctl stop tomcat

@@ -6,7 +6,7 @@ token=$(curl -s -X POST \
 -H "Content-Type: application/json" \
 -d "{\"password\":\"1q2w3e4r\", \"userName\":\"admin\"}" \
 "http://10.0.6.14:8080/unidata-backend/api/internal/authentication/login" |awk -F "{" '{print $3}'|awk -F "\"" '{print $4}')
-echo "token=${token}"
+echo "---> login request gave token=${token}"
 
 
 #echo "---> createJob: reindexMappingsJob"
@@ -24,7 +24,6 @@ echo "token=${token}"
 #"http://10.0.6.14:8080/unidata-backend/api/internal/jobs" | awk -F "," '{print $1}'|awk -F ":" '{print $2}')
 #echo "jobId=${jobId}"
 
-echo "---> createJob: reindexDataJob"
 jobId=$(curl -s -X PUT \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
@@ -45,16 +44,16 @@ jobId=$(curl -s -X PUT \
 {\"name\":\"skipNotifications\",\"multi_select\":false,\"value\":\"false\",\"type\":\"BOOLEAN\",\"id\":\"job.parameter.meta.DefaultMetaParameter-87\",\"deepDirty\":false,\"modelDirty\":false},
 {\"name\":\"filters\",\"multi_select\":false,\"value\":\"\",\"type\":\"STRING\",\"id\":\"job.parameter.meta.DefaultMetaParameter-88\",\"deepDirty\":false,\"modelDirty\":false}]}" \
 "http://10.0.6.14:8080/unidata-backend/api/internal/jobs" | awk -F "," '{print $1}'|awk -F ":" '{print $2}')
-echo "jobId=${jobId}"
+echo "---> createJob with jobId=${jobId} is done"
 
 
-echo "---> startJob:"
 jobExecutionId=$(curl -s -X POST \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: ${token}" \
 "http://10.0.6.14:8080/unidata-backend/api/internal/jobs/start/${jobId}")
-echo "jobExecutionId=${jobExecutionId}"
+echo "---> startJob with jobExecutionId=${jobExecutionId} is done"
+
 
 fromInd=0
 itemCount=1000
@@ -66,15 +65,17 @@ status=$(curl -s -X GET \
 -H "Content-Type: application/json" \
 -H "Authorization: ${token}" \
 "http://10.0.6.14:8080/unidata-backend/api/internal/jobs/executions/${jobId}/${fromInd}/${itemCount}"| awk -F "," '{print $5}'|awk -F "\"" '{print $4}')
-echo "status=${status}, sleep for 1sec..."
+echo "sleeping for 1sec, status=${status} ..."
 sleep 1
 done
+echo "---> jobExecutionId=${jobExecutionId} is completed"
 
 
-
-echo "---> deleteJob:"
 curl -s -X DELETE \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: ${token}" \
-"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/${jobId}"
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/${jobId}" > /dev/null && echo "---> deleteJob with jobId=${jobId} is done"
+
+
+echo "---> reindexDataJob is done"
