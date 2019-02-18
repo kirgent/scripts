@@ -5,6 +5,7 @@ cd /home/centuser/scripts
 
 echo "---> git status:"
 git status && echo "---> git status-ed"
+git diff --color=always
 
 echo "sleep for 5 sec..."
 sleep 5

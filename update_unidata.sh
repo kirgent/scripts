@@ -123,7 +123,7 @@ fi
 
 cp -rv ${UNIDATA}/Tomcat/webapps/* ${TOMCAT}/webapps/ && echo "---> tomcat/webapps are copied OK"
 
-chown -R tomcat:tomcat ${TOMCAT}/webapps/ ${TOMCAT}/conf/ ${TOMCAT}/logs/  && echo "---> tomcat/* are chowned OK"
+chown -R tomcat:tomcat ${TOMCAT}/webapps/ ${TOMCAT}/conf/ ${TOMCAT}/logs/ && echo "---> tomcat/* are chowned OK"
 
 systemctl start elasticsearch && echo "---> elasticsearch is started OK"
 
