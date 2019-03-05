@@ -14,7 +14,7 @@ if [[ ! -x "$(which awk 2> /dev/null)" ]]; then echo "awk is not found"; exit; f
 
 if [[ $(whoami) != "root" ]]; then
 echo "You must be root to run"
-exit
+exit 1
 fi
 
 # copy all new tomcat/conf/* files to target tomcat/conf?:
@@ -37,8 +37,8 @@ else
 if [[ ! -e "$FILE" ]]; then echo "File $FILE not exist!"
 exit
 else
-TARGZ="`ls -x $FILE`"
-if [[ `echo "$TARGZ" | rev |  cut -f1-2 -d. | rev` != "tar.gz" ]]; then echo "File is not tar.gz!"
+TARGZ="$(ls -x $FILE)"
+if [[ $(echo "$TARGZ" | rev |  cut -f1-2 -d. | rev) != "tar.gz" ]]; then echo "File is not tar.gz!"
 exit
 fi
 fi
@@ -52,17 +52,17 @@ fi
 
 
 # get rX.X prefix (unidata-rX.X-yyyyyyy)
-PREFIX="`ls -x ${TARGZ}|cut -f2 -d-`"
+PREFIX="$(ls -x ${TARGZ}|cut -f2 -d-)"
 
 #get yyyyyyy postfix (unidata-rX.X-yyyyyyy)
-POSTFIX="`ls -x ${TARGZ}|cut -f3 -d-|cut -f1 -d.`"
+POSTFIX="$(ls -x ${TARGZ}|cut -f3 -d-|cut -f1 -d.)"
 
 UNIDATA="unidata-$PREFIX"
 
 
 echo "UPDATE_CONF=$UPDATE_CONF"
 echo "UPDATE_LINKS=$UPDATE_LINKS"
-echo "$UNIDATA-$POSTFIX will be deployed in 5 seconds..."
+echo "$UNIDATA-$POSTFIX will be deployed in 5sec..."
 sleep 5
 
 
@@ -131,8 +131,8 @@ systemctl start elasticsearch && echo "---> elasticsearch is started OK"
 ###############################################
 #### patching
 sed -i 's/unidata.password.policy.expiration.email.notification.period.days=.*/unidata.password.policy.expiration.email.notification.period.days=1/' ${TOMCAT}/conf/unidata/backend.properties
-sed -i 's/unidata.password.policy.admin.expiration.days=.*/unidata.password.policy.admin.expiration.days=1/' ${TOMCAT}/conf/unidata/backend.properties
-sed -i 's/unidata.password.policy.user.expiration.days=.*/unidata.password.policy.user.expiration.days=1/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.admin.expiration.days=.*/unidata.password.policy.admin.expiration.days=2/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.user.expiration.days=.*/unidata.password.policy.user.expiration.days=2/' ${TOMCAT}/conf/unidata/backend.properties
 sed -i 's/unidata.password.policy.check.last.repeat=.*/unidata.password.policy.check.last.repeat=0/' ${TOMCAT}/conf/unidata/backend.properties
 sed -i 's/unidata.password.policy.regexp=.*/unidata.password.policy.regexp=((?=.*[0-9])(?=.*[a-z])).{1,}/' ${TOMCAT}/conf/unidata/backend.properties
 
@@ -148,7 +148,7 @@ systemctl start tomcat && echo "---> tomcat is started OK"
 
 
 ln -sfvn "$UNIDATA" unidata
-ln -sfv "$TARGZ" unidata---
+ln -sfv "$TARGZ" unidata--
 ln -sfv "$TARGZ" unidata-${PREFIX}- && echo "---> symlinks are updated OK"
 
 if [[ "$UPDATE_LINKS" == "true" ]]; then
@@ -168,8 +168,8 @@ fi
 
 
 echo "---> workaround:"
+echo "Sleeping and waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
 while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
-echo "sleeping for 3sec, waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
 sleep 3
 done
 cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json

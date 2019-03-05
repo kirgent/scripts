@@ -9,6 +9,25 @@ token=$(curl -s -X POST \
 echo "---> login request gave token=${token}"
 
 
+curl -s -X DELETE \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: ${token}" \
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/1" > /dev/null && echo "---> deleteJob with jobId=1 is done"
+
+curl -s -X DELETE \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: ${token}" \
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/2" > /dev/null && echo "---> deleteJob with jobId=2 is done"
+
+curl -s -X DELETE \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: ${token}" \
+"http://10.0.6.14:8080/unidata-backend/api/internal/jobs/3" > /dev/null && echo "---> deleteJob with jobId=3 is done"
+
+
 #echo "---> createJob: reindexMappingsJob"
 #jobId=$(curl -s -X PUT \
 #-H "Accept: application/json" \

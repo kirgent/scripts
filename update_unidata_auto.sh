@@ -17,6 +17,8 @@ echo "You must be root to run"
 exit 1
 fi
 
+while true; do
+
 # copy all new tomcat/conf/* files to target tomcat/conf?:
 UPDATE_CONF=true
 # create symbolic links to all configs?:
@@ -31,14 +33,14 @@ HOMEUSER="/home/centuser"
 LOOKING_DIR="$HOMEUSER/d"
 TEMP="distribution"
 
-while [[ ! -e "`ls -x $LOOKING_DIR/Unidata-*.zip`" ]]; do
-echo "sleeping for 3sec, waiting for Unidata-*.zip in $LOOKING_DIR ..."
+echo -e "\n\n\nSleeping and waiting for Unidata-*.zip in $LOOKING_DIR ..."
+while [[ ! -e "$(ls -x $LOOKING_DIR/Unidata-*.zip 2> /dev/null)" ]]; do
 sleep 3
 done
-ZIP="`ls -x $LOOKING_DIR/Unidata-*.zip`"
+ZIP="$(ls -x $LOOKING_DIR/Unidata-*.zip)"
 
-echo "Unzipping $ZIP will be started in 3 seconds..."
-sleep 3
+echo "Unzipping $ZIP will be started in 5sec..."
+sleep 5
 
 cd ${HOMEUSER}
 rm -v Unidata-*.zip && echo "---> old zip is removed OK"
@@ -46,23 +48,23 @@ unzip "$ZIP" && echo "---> zip is unpacked OK"
 mv -v "$ZIP" ${HOMEUSER} && echo "---> zip is moved OK"
 
 # get full filename (unidata-rX.X-xxxxxxx.tar.gz)
-TARGZ="`ls -x ${TEMP}/unidata-*|cut -f2 -d/`"
+TARGZ="$(ls -x ${TEMP}/unidata-*|cut -f2 -d/)"
 # move to home
 mv -v ${TEMP}/${TARGZ} ${HOMEUSER} && echo "---> targz is moved OK"
 rmdir -v ${TEMP} && echo "---> $TEMP is removed OK"
 
 # get rX.X prefix (unidata-rX.X-yyyyyyy)
-PREFIX="`ls -x ${TARGZ}|cut -f2 -d-`"
+PREFIX="$(ls -x ${TARGZ}|cut -f2 -d-)"
 
 # get yyyyyyy postfix (unidata-rX.X-yyyyyyy)
-POSTFIX="`ls -x ${TARGZ}|cut -f3 -d-|cut -f1 -d.`"
+POSTFIX="$(ls -x ${TARGZ}|cut -f3 -d-|cut -f1 -d.)"
 
 UNIDATA="unidata-$PREFIX"
 
 
 echo "UPDATE_CONF=$UPDATE_CONF"
 echo "UPDATE_LINKS=$UPDATE_LINKS"
-echo "$UNIDATA-$POSTFIX will be deployed in 5 seconds..."
+echo "$UNIDATA-$POSTFIX will be deployed in 5sec..."
 sleep 5
 
 
@@ -87,7 +89,7 @@ cd ${UNIDATA}/database
 cd ${HOMEUSER}
 
 
-sudo -u postgres `which psql` -U postgres <<'SQL'
+sudo -u postgres $(which psql) -U postgres <<'SQL'
 \c unidata
 SELECT script FROM schema_version ORDER BY installed_rank DESC LIMIT 10;
 SQL
@@ -120,8 +122,8 @@ systemctl start elasticsearch && echo "---> elasticsearch is started OK"
 ###############################################
 #### patching
 sed -i 's/unidata.password.policy.expiration.email.notification.period.days=.*/unidata.password.policy.expiration.email.notification.period.days=1/' ${TOMCAT}/conf/unidata/backend.properties
-sed -i 's/unidata.password.policy.admin.expiration.days=.*/unidata.password.policy.admin.expiration.days=1/' ${TOMCAT}/conf/unidata/backend.properties
-sed -i 's/unidata.password.policy.user.expiration.days=.*/unidata.password.policy.user.expiration.days=1/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.admin.expiration.days=.*/unidata.password.policy.admin.expiration.days=2/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.password.policy.user.expiration.days=.*/unidata.password.policy.user.expiration.days=2/' ${TOMCAT}/conf/unidata/backend.properties
 sed -i 's/unidata.password.policy.check.last.repeat=.*/unidata.password.policy.check.last.repeat=0/' ${TOMCAT}/conf/unidata/backend.properties
 sed -i 's/unidata.password.policy.regexp=.*/unidata.password.policy.regexp=((?=.*[0-9])(?=.*[a-z])).{1,}/' ${TOMCAT}/conf/unidata/backend.properties
 
@@ -137,7 +139,7 @@ systemctl start tomcat && echo "---> tomcat is started OK"
 
 
 ln -sfvn "$UNIDATA" unidata
-ln -sfv "$TARGZ" unidata---
+ln -sfv "$TARGZ" unidata--
 ln -sfv "$TARGZ" unidata-${PREFIX}- && echo "---> symlinks are updated OK"
 
 if [[ "$UPDATE_LINKS" == "true" ]]; then
@@ -157,8 +159,8 @@ fi
 
 
 echo "---> workaround:"
+echo "Sleeping and waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
 while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
-echo "sleeping for 3sec, waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
 sleep 3
 done
 cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
@@ -169,3 +171,5 @@ echo "---> Done"
 status_all.sh
 ls -l unidata
 ls -l unidata-${PREFIX}-
+
+done

@@ -6,7 +6,7 @@ echo "you must be root to run"
 exit 1
 fi
 
-echo "Restarting will be started in 3 seconds..."
+echo "Restarting will be started in 3sec..."
 sleep 3
 
 systemctl restart elasticsearch && echo "elasticsearch is restarted OK"

@@ -26,7 +26,7 @@ fi
 
 HOMEUSER="/home/centuser"
 
-echo "Restoring will be started in 3 seconds..."
+echo "Restoring will be started in 5sec..."
 sleep 3
 
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
@@ -34,7 +34,7 @@ systemctl restart postgresql-9.6 && echo "---> postgres is restarted OK"
 echo "sleep for 5sec..."
 sleep 5
 systemctl restart postgresql-9.6 && echo "---> postgres is restarted OK"
-echo "sleep for5 sec..."
+echo "sleep for 5sec..."
 sleep 5
 
 sudo -u ${username} `which psql` -U ${username} <<'SQL'
