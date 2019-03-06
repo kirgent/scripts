@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "This script removes 'user' from database on the localhost"
+
 if [[ $(whoami) != "root" ]]; then
 echo "You must be root to run"
 exit 1
