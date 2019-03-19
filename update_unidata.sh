@@ -100,7 +100,7 @@ cd ${HOMEUSER}
 
 sudo -u postgres `which psql` -U postgres <<'SQL'
 \c unidata
-SELECT script FROM schema_version ORDER BY installed_rank DESC LIMIT 10;
+SELECT script FROM schema_version ORDER BY installed_rank DESC LIMIT 5;
 SQL
 echo "---> above are last 10 script migrations"
 
@@ -111,17 +111,17 @@ rmdir ${ELASTICSEARCH}/plugins/analysis-morphology/elasticsearch
 
 ###############################################
 #### COPIYNG NEW
-cp -rv ${UNIDATA}/Tomcat/lib/* ${TOMCAT}/lib/ && echo "---> tomcat/lib are copied OK"
+cp -r ${UNIDATA}/Tomcat/lib/* ${TOMCAT}/lib/ && echo "---> tomcat/lib are copied OK"
 
 if [[ ! -d "$TOMCAT/conf/unidata" ]]; then
-cp -rv ${UNIDATA}/Tomcat/conf/* ${TOMCAT}/conf/ && echo "---> tomcat/conf are copied OK"
+cp -r ${UNIDATA}/Tomcat/conf/* ${TOMCAT}/conf/ && echo "---> tomcat/conf are copied OK"
 else
 if [[ "$UPDATE_CONF" == "true" ]]; then
-cp -rv ${UNIDATA}/Tomcat/conf/* ${TOMCAT}/conf/ && echo "---> tomcat/conf are copied OK"
+cp -r ${UNIDATA}/Tomcat/conf/* ${TOMCAT}/conf/ && echo "---> tomcat/conf are copied OK"
 fi
 fi
 
-cp -rv ${UNIDATA}/Tomcat/webapps/* ${TOMCAT}/webapps/ && echo "---> tomcat/webapps are copied OK"
+cp -r ${UNIDATA}/Tomcat/webapps/* ${TOMCAT}/webapps/ && echo "---> tomcat/webapps are copied OK"
 
 chown -R tomcat:tomcat ${TOMCAT}/webapps/ ${TOMCAT}/conf/ ${TOMCAT}/logs/ && echo "---> tomcat/* are chowned OK"
 
@@ -152,17 +152,17 @@ ln -sfv "$TARGZ" unidata--
 ln -sfv "$TARGZ" unidata-${PREFIX}- && echo "---> symlinks are updated OK"
 
 if [[ "$UPDATE_LINKS" == "true" ]]; then
-ln -sfv ${TOMCAT}/conf/unidata/backend.properties backend.properties
-ln -sfv ${TOMCAT}/conf/unidata/logback.xml logback.xml
-ln -sfv ${TOMCAT}/conf/server.xml server.xml
-ln -sfv ${TOMCAT}/conf/Catalina/localhost/unidata-backend.xml unidata-backend.xml
-ln -sfv ${TOMCAT}/conf/unidata/unidata-conf.xml unidata-conf.xml
-ln -sfv ${TOMCAT}/logs/unidata_backend.log unidata_backend.log
-ln -sfv ${TOMCAT}/webapps/unidata-frontend/customer.json customer.json
-ln -sfv ${TOMCAT}/webapps/unidata-frontend-admin/customer.json customer.json_
-ln -sfv /etc/elasticsearch/elasticsearch.yml elasticsearch.yml
-ln -sfv /var/log/elasticsearch/elasticsearch.log elasticsearch.log
-ln -sfv /var/lib/pgsql/9.6/data/postgresql.conf postgresql.conf
+ln -sf ${TOMCAT}/conf/unidata/backend.properties backend.properties
+ln -sf ${TOMCAT}/conf/unidata/logback.xml logback.xml
+ln -sf ${TOMCAT}/conf/server.xml server.xml
+ln -sf ${TOMCAT}/conf/Catalina/localhost/unidata-backend.xml unidata-backend.xml
+ln -sf ${TOMCAT}/conf/unidata/unidata-conf.xml unidata-conf.xml
+ln -sf ${TOMCAT}/logs/unidata_backend.log unidata_backend.log
+ln -sf ${TOMCAT}/webapps/unidata-frontend/customer.json customer.json
+ln -sf ${TOMCAT}/webapps/unidata-frontend-admin/customer.json customer.json_
+ln -sf /etc/elasticsearch/elasticsearch.yml elasticsearch.yml
+ln -sf /var/log/elasticsearch/elasticsearch.log elasticsearch.log
+ln -sf /var/lib/pgsql/9.6/data/postgresql.conf postgresql.conf
 echo "---> config symlinks are updated OK"
 fi
 
