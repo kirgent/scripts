@@ -24,6 +24,10 @@ echo "No input dump specified!"
 exit
 fi
 
+chown root:root ${1}
+chmod 644 ${1}
+
+
 HOMEUSER="/home/centuser"
 
 echo "Restoring will be started in 5sec..."
@@ -43,8 +47,15 @@ CREATE DATABASE unidata;
 SQL
 echo "$? ---> database unidata is recreated OK"
 
-sudo -u ${username} pg_restore -h ${host} -p ${port} -U ${username} -C -d ${database} $1 2> /dev/null
+echo "sleep for 5sec..."
+sleep 5
+
+sudo -u ${username} pg_restore -h ${host} -p ${port} -U ${username} -C -d ${database} ${1}
+#2> /dev/null
 echo "$? ---> pg_restore code is $?"
+
+echo "sleep for 5sec..."
+sleep 5
 
 
 cd $HOMEUSER/unidata/database
@@ -53,9 +64,9 @@ cd $HOMEUSER
 
 sudo -u ${username} `which psql` -U ${username} <<'SQL'
 \c unidata
-SELECT script FROM schema_version ORDER BY installed_rank DESC LIMIT 10;
+SELECT script FROM schema_version ORDER BY installed_rank DESC LIMIT 5;
 SQL
-echo "$? ---> above are last 10 script migrations"
+echo "$? ---> above are last 5 script migrations"
 
 sudo -u ${username} `which psql` -U ${username} <<'SQL'
 \c unidata

@@ -15,7 +15,7 @@ exit 1
 fi
 
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
-pg_dump -Fc ${database} -h ${host} -p ${port} -U ${username} > unidata_`date +%Y-%m-%d_%H%M%S`.dump && echo "---> pg_dump is done OK"
+pg_dump -Fc ${database} -h ${host} -p ${port} -U ${username} > unidata_dump_`date +%Y%m%d_%H%M%S`.dump && echo "---> pg_dump is done OK"
 systemctl start tomcat && echo "---> tomcat is started OK"
 ls -l *.dump
 echo "---> Done"

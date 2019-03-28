@@ -93,7 +93,7 @@ sudo -u postgres $(which psql) -U postgres <<'SQL'
 \c unidata
 SELECT script FROM schema_version ORDER BY installed_rank DESC LIMIT 5;
 SQL
-echo "---> above are last 10 script migrations"
+echo "---> above are last 5 script migrations"
 
 
 unzip -o ${UNIDATA}/ThirdParty/ElasticSearch/plugins/analysis-morphology/elasticsearch-analysis-morphology-*.zip -d ${ELASTICSEARCH}/plugins/analysis-morphology/ && echo "---> elasticsearch plugins are unzipped OK"
@@ -133,7 +133,7 @@ sed -i 's/unidata.activiti.task.mailServerPort=.*/unidata.activiti.task.mailServ
 sed -i 's/unidata.activiti.task.mailServerUseSSL=.*/unidata.activiti.task.mailServerUseSSL=true/' ${TOMCAT}/conf/unidata/backend.properties
 sed -i 's/unidata.activiti.task.mailServerDefaultFrom=.*/unidata.activiti.task.mailServerDefaultFrom=kirill.grushin@unidata-platform.ru/' ${TOMCAT}/conf/unidata/backend.properties
 sed -i 's/unidata.activiti.task.mailServerUsername=.*/unidata.activiti.task.mailServerUsername=kirill.grushin@unidata-platform.ru/' ${TOMCAT}/conf/unidata/backend.properties
-sed -i 's/unidata.activiti.task.mailServerPassword=.*/unidata.activiti.task.mailServerPassword=qwpoexplorer/' ${TOMCAT}/conf/unidata/backend.properties
+sed -i 's/unidata.activiti.task.mailServerPassword=.*/unidata.activiti.task.mailServerPassword=xxx/' ${TOMCAT}/conf/unidata/backend.properties
 echo "---> configs patching is done OK"
 systemctl start tomcat && echo "---> tomcat is started OK"
 
@@ -149,8 +149,8 @@ ln -sf ${TOMCAT}/conf/server.xml server.xml
 ln -sf ${TOMCAT}/conf/Catalina/localhost/unidata-backend.xml unidata-backend.xml
 ln -sf ${TOMCAT}/conf/unidata/unidata-conf.xml unidata-conf.xml
 ln -sf ${TOMCAT}/logs/unidata_backend.log unidata_backend.log
-ln -sf ${TOMCAT}/webapps/unidata-frontend/customer.json customer.json
-ln -sf ${TOMCAT}/webapps/unidata-frontend-admin/customer.json customer.json_
+ln -sf ${TOMCAT}/webapps/unidata-frontend/customer.json customer.json_
+ln -sf ${TOMCAT}/webapps/unidata-frontend-admin/customer.json customer.json
 ln -sf /etc/elasticsearch/elasticsearch.yml elasticsearch.yml
 ln -sf /var/log/elasticsearch/elasticsearch.log elasticsearch.log
 ln -sf /var/lib/pgsql/9.6/data/postgresql.conf postgresql.conf
@@ -158,13 +158,13 @@ echo "---> config symlinks are updated OK"
 fi
 
 
-echo "---> workaround:"
-echo "Sleeping and waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
-while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
-sleep 3
-done
-cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
-echo "---> workaround is applied"
+#echo "---> workaround:"
+#echo "Sleeping and waiting for ${TOMCAT}/webapps/unidata-frontend/customer.json ..."
+#while [[ ! -e "${TOMCAT}/webapps/unidata-frontend/customer.json" ]]; do
+#sleep 3
+#done
+#cp -v /usr/share/tomcat/webapps/unidata-frontend/customer.json /usr/share/tomcat/webapps/unidata-frontend-admin/  && sed -i "s/.*\"APP_MODE\": \"user\",/\"APP_MODE\": \"admin\",/g" /usr/share/tomcat/webapps/unidata-frontend-admin/customer.json
+#echo "---> workaround is applied"
 
 
 echo "---> Done"
