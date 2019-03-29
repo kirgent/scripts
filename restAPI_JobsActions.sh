@@ -36,7 +36,7 @@ curl -s -X DELETE \
 -H "Authorization: ${token}" \
 "http://${host}:${port}/unidata-backend/api/internal/jobs/4" > /dev/null && echo "---> deleteJob with jobId=4 is done"
 
-curl -v -X DELETE \
+curl -s -X DELETE \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: ${token}" \
@@ -58,7 +58,7 @@ curl -v -X DELETE \
 #"http://${host}:${port}/unidata-backend/api/internal/jobs" | awk -F "," '{print $1}'|awk -F ":" '{print $2}')
 #echo "jobId=${jobId}"
 
-jobId=$(curl -v -X PUT \
+jobId=$(curl -s -X PUT \
 -H "Accept: */*" \
 -H "Content-Type: application/json" \
 -H "Connection: keep-alive" \

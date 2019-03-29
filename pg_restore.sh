@@ -8,6 +8,7 @@ database=unidata
 host=localhost
 port=5432
 username=postgres
+file=${1}
 
 
 if [[ ! -x "$(which curl 2> /dev/null)" ]]; then echo "curl is not found"; exit; fi
@@ -24,9 +25,8 @@ echo "No input dump specified!"
 exit
 fi
 
-chown root:root ${1}
-chmod 644 ${1}
-
+chown root:root ${file}
+chmod 644 ${file}
 
 HOMEUSER="/home/centuser"
 
@@ -50,7 +50,7 @@ echo "$? ---> database unidata is recreated OK"
 echo "sleep for 5sec..."
 sleep 5
 
-sudo -u ${username} pg_restore -h ${host} -p ${port} -U ${username} -C -d ${database} ${1}
+sudo -u ${username} pg_restore -h ${host} -p ${port} -U ${username} -C -d ${database} ${file}
 #2> /dev/null
 echo "$? ---> pg_restore code is $?"
 
