@@ -13,4 +13,4 @@ sleep 3
 systemctl stop postgresql-9.6 && echo "postgres is stopped OK"
 sleep 3
 
-status_all.sh
+status_p_e_t.sh

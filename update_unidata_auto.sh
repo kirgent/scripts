@@ -208,7 +208,7 @@ fi
 
 
 echo "---> Done"
-status_all.sh
+status_p_e_t.sh
 ls -l unidata
 ls -l unidata-${PREFIX}-
 

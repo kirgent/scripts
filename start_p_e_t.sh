@@ -13,4 +13,4 @@ sleep 3
 systemctl start tomcat && echo "tomcat is started OK"
 sleep 3
 
-status_all.sh
+status_p_e_t.sh

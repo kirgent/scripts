@@ -12,4 +12,4 @@ sleep 3
 systemctl restart elasticsearch && echo "elasticsearch is restarted OK"
 systemctl restart tomcat && echo "tomcat is restarted OK"
 
-status_all.sh
+status_p_e_t.sh
