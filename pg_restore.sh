@@ -33,6 +33,7 @@ HOMEUSER="/home/centuser"
 echo "Restoring will be started in 5sec..."
 sleep 3
 
+echo "tomcat pid=$(ps aux|grep java|grep tomcat|awk '{print $2}')"
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
 systemctl restart postgresql-9.6 && echo "---> postgres is restarted OK"
 echo "sleep for 5sec..."

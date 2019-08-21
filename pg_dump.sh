@@ -14,6 +14,7 @@ echo "you must be root to run"
 exit 1
 fi
 
+echo "tomcat pid=$(ps aux|grep java|grep tomcat|awk '{print $2}')"
 systemctl stop tomcat && echo "---> tomcat is stopped OK"
 pg_dump -Fc ${database} -h ${host} -p ${port} -U ${username} > unidata_dump_`date +%Y%m%d_%H%M%S`.dump && echo "---> pg_dump is done OK"
 systemctl start tomcat && echo "---> tomcat is started OK"

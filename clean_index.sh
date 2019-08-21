@@ -7,4 +7,9 @@
 #fi
 
 curl -X DELETE "http://localhost:9200/_all"
-#&& restart_e_t.sh
+echo
+echo
+restAPI_reindexDataJob.sh
+echo
+echo
+restAPI_reindexMappingsJob.sh
