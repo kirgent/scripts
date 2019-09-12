@@ -1,5 +1,4 @@
 #!/bin/bash
-# written by Kirill Grushin (kirgent@gmail.com)
 
 if [ -z "$1" ]; then
 echo "no input file specified!"

@@ -1,4 +1,0 @@
-exception: com\.unidata
-java\.lang\.NullPointerException
-bad SQL grammar
-PSQLException:

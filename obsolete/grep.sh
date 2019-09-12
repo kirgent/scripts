@@ -1,5 +1,4 @@
 #!/bin/bash
-# written by Kirill Grushin (kirgent@gmail.com)
 
 file="$1"
 file_pattern="$HOME/scripts/patterns.txt"
