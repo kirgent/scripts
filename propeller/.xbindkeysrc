@@ -1,0 +1,38 @@
+"xterm.sh"
+Alt + c:53
+
+"xterm.sh"
+Alt + c:24
+
+#"gnome-screensaver-command --lock"
+#Control + Control_L + Escape
+
+"switch_to.sh"
+Alt + space
+
+"switch_to.sh"
+Control + space
+
+"switch_to.sh"
+Control + Alt + c:45
+
+"switch_to_english.sh && xscreensaver-command -lock"
+Mod4 + Super_L + c:46
+
+#"xdotool getactivewindow windowminimize"
+#Control + Escape
+
+#"xdotool getactivewindow windowclose"
+#Alt + F4
+
+#"wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
+#Alt + F5
+
+"volume_up.sh"
+Alt + c:25
+
+"volume_down.sh"
+Alt + c:39
+
+"volume_toogle.sh"
+Alt + c:58

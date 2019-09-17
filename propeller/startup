@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# fluxbox startup-script:
+#
+# Lines starting with a '#' are ignored.
+
+# Change your keymap:
+xmodmap "/home/kgrushin/.Xmodmap"
+
+# Applications you want to run with fluxbox.
+# MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN ''&'' AT THE END.
+#
+xbindkeys &
+fbsetbg ~/.fluxbox/backgrounds/d4lzxm1-0884eee8-790d-4ce1-95f7-f080cefb79f6.png &
+xrandr --auto --output eDP-1 --mode 1920x1080 --left-of DP-3 &
+google-chrome-stable &
+chromium-browser &
+idea_.sh &
+slack &
+nm-applet &
+unclutter -idle 2 &
+mate-power-manager &
+# wmnd &
+# wmsmixer -w &
+# idesk &
+#
+# Debian-local change:
+#   - fbautostart has been added with a quick hack to check to see if it
+#     exists. If it does, we'll start it up by default.
+which fbautostart > /dev/null
+if [ $? -eq 0 ]; then
+    fbautostart
+fi
+
+# And last but not least we start fluxbox.
+# Because it is the last app you have to run it with ''exec'' before it.
+exec fluxbox
+# or if you want to keep a log:
+# exec fluxbox -log "/home/kgrushin/.fluxbox/log"
