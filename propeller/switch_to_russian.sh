@@ -3,5 +3,5 @@
 
 if [ `setxkbmap -query|grep layout|awk '{print $NF}'` != "ru" ]; then
 setxkbmap ru
-echo "Russian"|osd_cat --pos bottom --offset 40 --align right -c green --delay 1 -f '-*-*-*-*-*-*-16-*-*-*-*-*-*'
+echo "Russian"|osd_cat --pos bottom --offset -90 --indent 45 --align right -c green --delay 1 -f '-*-*-*-*-*-*-24-*-*-*-*-*-*'
 fi

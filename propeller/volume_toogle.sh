@@ -1,7 +1,9 @@
 #!/bin/bash
+# written by Kirill Grushin (kirgent@gmail.com)
+
 amixer sset Speaker unmute
 amixer sset Headphone unmute
-mixer sset Headphone 100%
+amixer sset Headphone 100%
 
 amixer sset PCM 100%
 amixer sset Speaker 100%
